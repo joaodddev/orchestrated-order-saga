@@ -1,0 +1,12 @@
+require "sequel"
+require_relative "lib/payment_service/infrastructure/persistence/database"
+
+namespace :db do
+  desc "Run pending migrations"
+  task :migrate do
+    Sequel.extension :migration
+    db = PaymentService::Infrastructure::Persistence.connect
+    Sequel::Migrator.run(db, "db/migrations")
+    puts "Migrations applied."
+  end
+end

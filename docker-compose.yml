@@ -34,3 +34,13 @@ services:
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       CLUSTER_ID: NkV4OEZCNTcwNTJENDM3Qm
+
+  postgres-payment:
+    image: postgres:16
+    container_name: orchestrator-postgres-payment
+    environment:
+      POSTGRES_USER: saga
+      POSTGRES_PASSWORD: saga
+      POSTGRES_DB: payment_db
+    ports:
+      - "5433:5432"
