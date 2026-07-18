@@ -1,0 +1,28 @@
+# Go
+*.exe
+*.dll
+*.so
+*.test
+*.out
+vendor/
+
+# Ruby
+*.gem
+.bundle/
+vendor/bundle/
+.byebug_history
+/log/*.log
+/tmp/*
+!/tmp/.keep
+
+# Editors
+.zed/
+.vscode/
+.idea/
+
+# Env
+.env
+*.local
+
+# OS
+.DS_Store
