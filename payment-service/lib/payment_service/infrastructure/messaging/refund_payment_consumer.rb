@@ -15,7 +15,7 @@ module PaymentService
           db = PaymentService::Infrastructure::Persistence.connect
           repository = PaymentService::Infrastructure::Persistence::SequelPaymentRepository.new(db)
           @use_case = PaymentService::Application::UseCase::RefundPayment.new(repository: repository)
-          @producer = KafkaProducer.new(brokers: ENV.fetch("KAFKA_BROKERS", "localhost:9092"))
+          @kafka_producer = KafkaProducer.new(brokers: ENV.fetch("KAFKA_BROKERS", "localhost:9092"))
         end
 
         def process(message)
@@ -31,7 +31,7 @@ module PaymentService
             occurredAt: Time.now.utc.iso8601
           }
 
-          @producer.publish(topic: "payment.refund.reply", key: command["sagaId"], payload: reply.to_json)
+          @kafka_producer.publish(topic: "payment.refund.reply", key: command["sagaId"], payload: reply.to_json)
           puts "[payment.refund.command] order #{payload['orderId']} refunded=#{success}"
         rescue => e
           puts "[payment.refund.command] failed: #{e.message}"
